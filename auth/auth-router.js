@@ -16,7 +16,15 @@ router.post('/register', authBodyValidator, (req, res) => {
 
 router.post('/login', authBodyValidator, (req, res) => {
   // implement login
+  const { username, password } = req.body;
+  db.findBy({ username })
+  .then(user => {
+    if (user && bcrypt.compareSync(password, user.password)) {
+      const token = generateToken(user)
+      res.status(200).json({error: false, message: 'Auth Success', token, data: user})
 
+    }
+  })
 });
 
 function authBodyValidator(req, res, next){
@@ -45,7 +53,7 @@ function generateToken(user) {
 
   const result = jwt.sign(
     payload,
-    process.env.SECRET,
+    process.env.SECRET || 'testing test',
     options
   );
 
