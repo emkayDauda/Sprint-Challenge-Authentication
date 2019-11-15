@@ -64,6 +64,7 @@ Implement an User Authentication System. Hash user's passwords before saving the
 
 **Note**: the database already has the users table, but if you run into issues, the migrations are available.
 
+
 ## Stretch Problem
 
 Build a front end to show the jokes.
