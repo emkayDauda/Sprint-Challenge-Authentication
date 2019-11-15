@@ -28,4 +28,27 @@ describe('auth endpoints', () => {
             expect(response.body.password).not.toBe('aPassword')
         })
     })
+
+    describe('login endpoint', () => {
+        test('/login returns res 200', async () => {
+            await request(server).post('/api/auth/register')
+            .send({username: 'aUserName', password: 'aPassword'})
+
+            return request(server).post('/api/auth/login')
+            .send({username: 'aUserName', password: 'aPassword'})
+            .expect(200)
+
+        })
+
+        test('/login returns some token', async () => {
+            await request(server).post('/api/auth/register')
+            .send({username: 'aUserName', password: 'aPassword'})
+
+            const loginResponse = await request(server).post('/api/auth/login')
+            .send({username: 'aUserName', password: 'aPassword'})
+            
+            expect(loginResponse.body.token).not.toBe(null || undefined)
+
+        })
+    })
 })

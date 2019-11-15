@@ -16,6 +16,7 @@ router.post('/register', authBodyValidator, (req, res) => {
 
 router.post('/login', authBodyValidator, (req, res) => {
   // implement login
+
 });
 
 function authBodyValidator(req, res, next){
