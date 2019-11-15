@@ -18,8 +18,14 @@ describe('auth endpoints', () => {
             const response = await request(server).post('/api/auth/register')
             .send({username: 'aUserName', password: 'aPassword'})
 
-            expect(response.username).toBe('aUserName')
-            expect(response.password).toBe('aPassword')
+            expect(response.body.username).toBe('aUserName')
+        })
+
+        test('register endpoint hashes password', async () => {
+            const response = await request(server).post('/api/auth/register')
+            .send({username: 'aUserName', password: 'aPassword'})
+
+            expect(response.body.password).not.toBe('aPassword')
         })
     })
 })

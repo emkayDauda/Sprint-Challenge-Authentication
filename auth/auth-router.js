@@ -6,6 +6,12 @@ const db = require('./authModel')
 
 router.post('/register', authBodyValidator, (req, res) => {
   // implement registration
+  db.insert(req.valHashedUser)
+  .then(user => {
+    if (user) {
+      res.status(201).json(user)
+    }
+  })
 });
 
 router.post('/login', authBodyValidator, (req, res) => {
