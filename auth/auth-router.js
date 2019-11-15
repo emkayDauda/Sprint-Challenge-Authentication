@@ -1,11 +1,14 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
-router.post('/register', (req, res) => {
+const db = require('./authModel')
+
+router.post('/register', authBodyValidator, (req, res) => {
   // implement registration
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', authBodyValidator, (req, res) => {
   // implement login
 });
 
@@ -22,6 +25,24 @@ function authBodyValidator(req, res, next){
     req.valUser = {username, password}
     next()
   }
+}
+
+function generateToken(user) {
+  const payload = {
+    subject: user.id,
+    username: user.username
+  };
+  const options = {
+    expiresIn: "1d"
+  };
+
+  const result = jwt.sign(
+    payload,
+    process.env.SECRET,
+    options
+  );
+
+  return result;
 }
 
 module.exports = router;

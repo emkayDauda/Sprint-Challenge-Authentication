@@ -3,7 +3,7 @@ const db = require('../database/dbConfig')
 function get(id) {
     let query = db('users as u')
 
-    if (id) query.where('u.id', id)
+    if (id) query.where('u.id', id).first()
 
     return query
 }
